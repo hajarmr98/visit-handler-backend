@@ -9,7 +9,7 @@ const Admin = db.sequelize.define(
       unique: true,
     },
     email: {
-      type: DataTypes.STRING(32),
+      type: DataTypes.STRING(255),
       allowNull: false,
       unique: true,
     },
