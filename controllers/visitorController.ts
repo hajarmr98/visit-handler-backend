@@ -15,7 +15,7 @@ const visitorFormController = async (req: Request, res: Response) => {
         isStringNotEmpty(req.body.petitioner_email)
     ){
         try{
-            
+
             let visit = await createNewVisit(req.body)
 
             sendSuccess({
@@ -23,7 +23,9 @@ const visitorFormController = async (req: Request, res: Response) => {
                 status: 200,
                 data: visit
             })
+
         } catch(err){
+            // throw err;
             sendError({
                 res, 
                 message: "Database error", 

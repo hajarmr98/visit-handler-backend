@@ -29,6 +29,11 @@ const Visit = db.sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    status: {
+      type: DataTypes.NUMBER,
+      allowNull: false,
+      defaultValue: 0,
+    }
   },
 );
 

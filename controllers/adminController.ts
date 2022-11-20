@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { isObjectNotEmpty, isStringNotEmpty } from "../lib/basics";
 import { sendSuccess, sendError } from "../lib/http";
-import { findLoginUser } from "../repositories/adminRepository";
+import { findLoginUser, getAllVisits, updateVisit } from "../repositories/adminRepository";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
+import enm from "../lib/enum"
 
 config()
 
@@ -67,13 +68,77 @@ const logAdminController = async (req: Request, res: Response, next: NextFunctio
       }
     } else sendError({
       res, 
-      message: "All data are required", 
+      message: "All data is required", 
       status: 400, 
       next
     });
 }
 
+const getAllVisitsController = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+
+    let allAdminsVisits = await getAllVisits()
+
+    console.log(allAdminsVisits);
+    
+    sendSuccess({
+      res, 
+      status: 200, 
+      data: allAdminsVisits
+    })
+
+  } catch (error) {
+    throw error;
+  }
+}
+const aproveVisitController = async (req: Request, res: Response, next: NextFunction) => {
+  if (isStringNotEmpty(req.params.id)){
+    try {
+  
+      let visitAprove = await updateVisit(req.params.id, enm.CONFIRMED)
+  
+      sendSuccess({
+        res, 
+        status: 200, 
+        data: !!visitAprove
+      })
+  
+    } catch (error) {
+      throw error;
+    }
+  } else sendError({
+    res, 
+    message: "All data is required", 
+    status: 400, 
+    next
+  });
+}
+const rejectVisitController = async (req: Request, res: Response, next: NextFunction) => {
+  if (isStringNotEmpty(req.params.id)){
+    try {
+      let visitReject = await updateVisit(req.params.id, enm.CANCELED)
+
+      sendSuccess({
+        res, 
+        status: 200, 
+        data: !!visitReject
+      })
+
+    } catch (error) {
+      throw error;
+    }
+  } else sendError({
+    res, 
+    message: "All data is required", 
+    status: 400, 
+    next
+  });
+}
+
 export { 
-    logAdminController
+  logAdminController,
+  getAllVisitsController,
+  aproveVisitController,
+  rejectVisitController
 }
  

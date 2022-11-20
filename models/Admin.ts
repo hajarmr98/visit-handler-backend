@@ -17,9 +17,6 @@ const Admin = db.sequelize.define(
       type: DataTypes.STRING(64),
       allowNull: false,
     },
-  },
-  {
-    timestamps: false,
   }
 );
 
