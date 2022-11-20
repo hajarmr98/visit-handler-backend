@@ -43,3 +43,6 @@ Visit.belongsTo(Admin, {
   },
   as: "admin",
 });
+
+
+export default Visit;

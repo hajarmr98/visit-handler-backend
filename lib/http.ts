@@ -8,7 +8,7 @@ interface ISendSuccessParams {
     res: Response;
     status: number;
     data: boolean | DynamicObject;
-    cookie: false | DynamicObject;
+    cookie?: false | DynamicObject;
 }
 
 interface ISendErrParams {
