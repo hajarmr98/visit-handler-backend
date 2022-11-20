@@ -15,7 +15,7 @@ interface ISendErrParams {
     res: Response;
     message: string;
     status: number;
-    next: NextFunction;
+    next?: NextFunction;
     err?: false | DynamicObject;
 }
 

@@ -1,13 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { db } from "../db";
 import { isObjectNotEmpty, isStringNotEmpty } from "../lib/basics";
 import { sendSuccess, sendError } from "../lib/http";
-import { findLoginUser } from "../repositories/AdminRepository";
-import Admin from "../models/Admin"
+import { findLoginUser } from "../repositories/adminRepository";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-require("dotenv").config();
+import { config } from "dotenv";
 
+config()
 
 const logAdminController = async (req: Request, res: Response, next: NextFunction) => {
   if (
