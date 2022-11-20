@@ -1,41 +1,27 @@
 import { Sequelize, DataTypes } from "sequelize";
-import { config } from "dotenv";
+import config from "./config"
 
-const sequelize = (): Sequelize => {
-    
-    config();
-
-    if (
-        process.env.DB_NAME &&
-        process.env.DB_USER &&
-        process.env.DB_PASS &&
-        process.env.DB_HOST &&
-        process.env.DB_PORT
-    ){
-        return new Sequelize(
-        "database",
-        process.env.DB_USER,
-        process.env.DB_PASS,
-        {
-            dialect: "sqlite",
-            host: "0.0.0.0",
-            pool: {
-                max: 5,
-                min: 0,
-                idle: 5000,
-            },
-            storage: "./scripts/visitsdb.sqlite"
+const sequelize = (): any => {
+  return new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    {
+        dialect: 'sqlite',
+        storage: 'db/scripts/visitsdb.sqlite',
+        define: {
+          underscored: true
         }
-        );
-    } else {
-        console.error("Invalid database data");   
-        return new Sequelize();
-    }
+      }
+  );
+}
 
+let db: any = {
+  sequelize: sequelize(),
+  Sequelize
 }
 
 export {
-    sequelize,
-    Sequelize,
+    db,
     DataTypes
 }

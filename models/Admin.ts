@@ -1,6 +1,6 @@
-import { sequelize, DataTypes } from "../db"
+import { db, DataTypes } from "../db"
 
-const Admin = sequelize && sequelize().define(
+const Admin = db.sequelize.define(
   "admin",
   {
     username: {
