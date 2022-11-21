@@ -1,6 +1,8 @@
 # Visit Handler Backend
 
-
+Aplicación con dos funciones principales:
+1. Solicitante: Solicitar visitas
+2. Admin: Login, Ver, Confirmar o rechazar las visitas
 
 ## Endpoints
 
@@ -11,6 +13,7 @@
 ### Datos disponibles
 
 - `{admin}`: Admin1, Admin2
+- `{password}`: Admin1, Admin2
 
 ### **admin**
 
@@ -43,8 +46,7 @@
     "petitioner_email": string,
     "status": number,
     "createdAt": string,
-    "updatedAt": string,
-    "admin_id": null
+    "updatedAt": string
   }
   ```
 - **PUT `/admin/visits/:id`**
