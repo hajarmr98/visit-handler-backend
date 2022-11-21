@@ -25,7 +25,6 @@ const visitorFormController = async (req: Request, res: Response) => {
             })
 
         } catch(err){
-            // throw err;
             sendError({
                 res, 
                 message: "Database error", 

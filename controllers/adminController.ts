@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { isObjectNotEmpty, isStringNotEmpty } from "../lib/basics";
 import { sendSuccess, sendError } from "../lib/http";
-import { findLoginUser, getAllVisits, updateVisit } from "../repositories/adminRepository";
+import { findLoginUser, getAllVisits, updateVisit, createAdmins } from "../repositories/adminRepository";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
-import enm from "../lib/enum"
+import enm from "../lib/enum";
 
 config()
 
@@ -79,12 +79,37 @@ const getAllVisitsController = async (req: Request, res: Response, next: NextFun
 
     let allAdminsVisits = await getAllVisits()
 
-    console.log(allAdminsVisits);
     
     sendSuccess({
       res, 
-      status: 200, 
+      status: 200,
       data: allAdminsVisits
+    })
+
+  } catch (error) {
+    throw error;
+  }
+}
+const createAdminsController = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+
+    let createAdmin1 = await createAdmins({
+      id: 1, 
+      username: 'Admin1', 
+      password: '$2a$12$s8CaAk3vEm26ecasajZzk.4BtdzMvNsiIritenFtnq8hN/eWPLaKG', 
+      email: 'admin1@gmail.com'
+    });
+    let createAdmin2 = await createAdmins({
+      id: 2, 
+      username: 'Admin2', 
+      password: '$2a$12$9eK8292vhsLJN0dPlW/3VO0BbwZnC9O6odSfOrqerorP/0ge2s6VS',
+      email: 'admin2@gmail.com'
+    });
+    
+    sendSuccess({
+      res, 
+      status: 200,
+      data: {createAdmin1, createAdmin2}
     })
 
   } catch (error) {
@@ -96,11 +121,11 @@ const aproveVisitController = async (req: Request, res: Response, next: NextFunc
     try {
   
       let visitAprove = await updateVisit(req.params.id, enm.CONFIRMED)
-  
+
       sendSuccess({
-        res, 
+        res,
         status: 200, 
-        data: !!visitAprove
+        data: visitAprove
       })
   
     } catch (error) {
@@ -139,6 +164,7 @@ export {
   logAdminController,
   getAllVisitsController,
   aproveVisitController,
-  rejectVisitController
+  rejectVisitController,
+  createAdminsController
 }
  
